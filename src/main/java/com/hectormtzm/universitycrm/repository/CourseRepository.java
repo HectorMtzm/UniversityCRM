@@ -8,4 +8,5 @@ import com.hectormtzm.universitycrm.entity.Course;
 
 public interface CourseRepository extends JpaRepository<Course, Long>{
     List<Course> findByStudentsId(Long id);
+    List<Course> findByInstructorId(Long id);
 }

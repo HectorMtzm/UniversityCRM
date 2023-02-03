@@ -66,6 +66,15 @@ public interface CourseService {
 
 
     /**
+     * Retrieves a list of {@link Course} for a given {@link Instructor} id.
+     * 
+     * @param instructorId the id of the instructor.
+     * @return list of courses for the given instructor.
+     */
+    List<Course> getCoursesByInstructorId(Long id);
+
+
+    /**
      * Assigns an {@link Instructor} to a {@link Course}.
      * 
      * @param courseId     the id of the course to be updated.

@@ -42,6 +42,11 @@ public class CourseController {
     public ResponseEntity<List<Course>> getStudentCourses(@PathVariable Long studentId){
     return new ResponseEntity<>(courseService.getCoursesByStudentId(studentId), HttpStatus.OK);
     }
+    
+    @GetMapping("/instructor/{instructorId}")
+    public ResponseEntity<List<Course>> getInstructorCourses(@PathVariable Long instructorId) {
+        return new ResponseEntity<>(courseService.getCoursesByInstructorId(instructorId), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<Course> saveCourse(@Valid @RequestBody Course course){
@@ -55,7 +60,6 @@ public class CourseController {
 
     @PutMapping("/{courseId}/instructor/{instructorId}")
     public ResponseEntity<Course> assignInstructor(@PathVariable Long courseId, @PathVariable Long instructorId) {
-        courseService.updateInstructor(courseId, instructorId);
         return new ResponseEntity<Course>(courseService.updateInstructor(courseId, instructorId), HttpStatus.OK);
     }
 

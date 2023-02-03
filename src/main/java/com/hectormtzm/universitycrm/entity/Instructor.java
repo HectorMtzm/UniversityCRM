@@ -2,6 +2,9 @@ package com.hectormtzm.universitycrm.entity;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +43,10 @@ public class Instructor {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @OneToMany
-    private List<Course> courses;    
+    @JsonIgnore
+    @OneToMany(mappedBy = "instructor", 
+    cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH })
+    private List<Course> courses;  
     
 }

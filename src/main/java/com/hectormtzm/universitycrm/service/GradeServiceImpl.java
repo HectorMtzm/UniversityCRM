@@ -5,7 +5,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.hectormtzm.universitycrm.entity.Course;
@@ -18,7 +17,6 @@ import com.hectormtzm.universitycrm.repository.GradeRepository;
 import jakarta.transaction.Transactional;
 
 @RequiredArgsConstructor
-@Component
 @Service
 public class GradeServiceImpl implements GradeService {
     

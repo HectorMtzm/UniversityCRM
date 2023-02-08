@@ -3,7 +3,6 @@ package com.hectormtzm.universitycrm.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.hectormtzm.universitycrm.entity.Course;
@@ -14,7 +13,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
 @Service
 public class CourseServiceImpl implements CourseService {
 
@@ -65,7 +63,8 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCoursesByInstructorId(Long instructorId) {
-        return courseRepository.findByInstructorId(instructorId);
+        // return courseRepository.findByInstructorId(instructorId);
+        return courseRepository.getInstructorCourses(instructorId);
     }
 
     @Override

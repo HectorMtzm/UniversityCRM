@@ -21,26 +21,26 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/instructor")
 public class InstructorController {
-    
+
     InstructorService instructorService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Instructor> geInstructor( @PathVariable Long id){
+    public ResponseEntity<Instructor> geInstructor(@PathVariable Long id) {
         return new ResponseEntity<>(instructorService.getInstructor(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Instructor> saveInstructor(@Valid @RequestBody Instructor instructor){
+    public ResponseEntity<Instructor> saveInstructor(@Valid @RequestBody Instructor instructor) {
         return new ResponseEntity<>(instructorService.saveInstructor(instructor), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Instructor> updateInstructor(@PathVariable Long id, @Valid @RequestBody Instructor instructor){
+    public ResponseEntity<Instructor> updateInstructor(@PathVariable Long id, @Valid @RequestBody Instructor instructor) {
         return new ResponseEntity<>(instructorService.updateInstructor(id, instructor), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Instructor> deleteInstructor(@PathVariable Long id){
+    public ResponseEntity<Void> deleteInstructor(@PathVariable Long id) {
         instructorService.deleteInstructor(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

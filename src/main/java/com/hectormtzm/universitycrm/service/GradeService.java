@@ -18,7 +18,6 @@ public interface GradeService {
      */
     Grade getGrade(Long studentId, Long courseId);
 
-
     /**
      * This method is used to save a new {@link Grade} to the database.
      * 
@@ -26,11 +25,10 @@ public interface GradeService {
      * @param studentId the id of the student for which the grade is to be saved
      * @param courseId  the id of the course for which the grade is to be saved
      * @return the grade object that has been saved to the database
-     * @throws IllegalArgumentException if a grade for the same student and course
-     *                                  already exists in the database
+     * @throws BadRequestException if a grade for the same student and course
+     *                             already exists in the database
      */
     Grade saveGrade(Grade grade, Long studentId, Long courseId);
-
 
     /**
      * Updates the score of a {@link Grade} for a {@link Student} in a particular
@@ -45,16 +43,15 @@ public interface GradeService {
      */
     Grade updateGrade(String score, Long studentId, Long courseId);
 
-
     /**
-     * Deletes a {@link Grade} for a {@link Student} in a specific {@link Course} from the
+     * Deletes a {@link Grade} for a {@link Student} in a specific {@link Course}
+     * from the
      * database.
      * 
      * @param studentId the id of the student
      * @param courseId  the id of the course
      */
     void deleteGrade(Long studentId, Long courseId);
-
 
     /**
      * Retrieves a list of {@link Grade} for a specific {@link Student}.
@@ -63,7 +60,6 @@ public interface GradeService {
      * @return a list of grades for the specified student
      */
     List<Grade> getStudentGrades(Long studentId);
-
 
     /**
      * Retrieves a list of all {@link Grade} for the {@link Course} with the given
@@ -75,7 +71,6 @@ public interface GradeService {
      *                           database.
      */
     List<Grade> getCourseGrades(Long courseId);
-
 
     /**
      * Retrieves a list of all {@link Grade} in the system.

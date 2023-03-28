@@ -10,7 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hectormtzm.universitycrm.entity.Course;
 import com.hectormtzm.universitycrm.entity.Student;
+import com.hectormtzm.universitycrm.exception.BadRequestException;
 import com.hectormtzm.universitycrm.exception.NotFoundException;
 import com.hectormtzm.universitycrm.repository.StudentRepository;
 
@@ -18,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     CourseService courseService;
@@ -34,7 +36,7 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("The student id '" + id + "' does not exist in our records"));
     }
-    
+
     @Transactional
     @Override
     public Student saveStudent(Student student) {
@@ -49,7 +51,7 @@ public class StudentServiceImpl implements StudentService{
         student.setId(id);
         return studentRepository.save(student);
     }
-    
+
     @Transactional
     @Override
     public void deleteStudent(Long id) {
@@ -73,6 +75,13 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public Student addCourseToStudent(long studentId, long courseId) {
         Student student = getStudent(studentId);
+        Course course = courseService.getCourse(courseId);
+
+        if (student.getCourses().contains(course)) {
+            throw new BadRequestException(
+                    "Student with id '" + studentId + "' is already enrolled in course with id " + courseId);
+        }
+
         student.getCourses().add(courseService.getCourse(courseId));
         return studentRepository.save(student);
     }
@@ -81,9 +90,10 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public void removeCourseFromStudent(Long studentId, Long courseId) {
         Student student = getStudent(studentId);
-        if(!getStudent(studentId).getCourses().remove(courseService.getCourse(courseId)))
-            throw new NotFoundException("Student with id '" + studentId + "' is not enrolled it course with id " + courseId);
+        if (!getStudent(studentId).getCourses().remove(courseService.getCourse(courseId)))
+            throw new NotFoundException(
+                    "Student with id '" + studentId + "' is not enrolled it course with id " + courseId);
         studentRepository.save(student);
     }
-    
+
 }

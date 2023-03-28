@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @AllArgsConstructor
 @RestController
 @RequestMapping("/student")
@@ -37,14 +36,14 @@ public class StudentController {
     public ResponseEntity<List<Student>> getStudents() {
         return new ResponseEntity<>(studentService.getStudents(), HttpStatus.OK);
     }
-    
+
     @PostMapping
     public ResponseEntity<Student> saveStudent(@Valid @RequestBody Student student) {
         return new ResponseEntity<>(studentService.saveStudent(student), HttpStatus.CREATED);
     }
-    
+
     @PutMapping("/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @Valid @RequestBody Student student) {        
+    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
         return new ResponseEntity<>(studentService.updateStudent(id, student), HttpStatus.CREATED);
     }
 
@@ -52,15 +51,15 @@ public class StudentController {
     public ResponseEntity<Student> addCourseToStudent(@PathVariable Long studentId, @PathVariable Long courseId) {
         return new ResponseEntity<>(studentService.addCourseToStudent(studentId, courseId), HttpStatus.CREATED);
     }
-    
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Student> deleteStudent(@PathVariable Long id){
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{studentId}/course/{courseId}")
-    public ResponseEntity<Student> removeCourseFromStudent(@PathVariable Long studentId, @PathVariable Long courseId){
+    public ResponseEntity<Student> removeCourseFromStudent(@PathVariable Long studentId, @PathVariable Long courseId) {
         studentService.removeCourseFromStudent(studentId, courseId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

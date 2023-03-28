@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
@@ -38,15 +39,15 @@ public class Instructor {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Email
     @NotBlank(message = "Email cannot be blank")
     @NonNull
     @Column(name = "email", nullable = false)
     private String email;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "instructor", 
-    cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToMany(mappedBy = "instructor", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH })
-    private List<Course> courses;  
-    
+    private List<Course> courses;
+
 }

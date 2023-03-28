@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.hectormtzm.universitycrm.entity.Course;
 import com.hectormtzm.universitycrm.entity.Grade;
 import com.hectormtzm.universitycrm.entity.Student;
-import com.hectormtzm.universitycrm.exception.IllegalArgumentException;
+import com.hectormtzm.universitycrm.exception.BadRequestException;
 import com.hectormtzm.universitycrm.exception.NotFoundException;
 import com.hectormtzm.universitycrm.repository.GradeRepository;
 
@@ -19,7 +19,7 @@ import jakarta.transaction.Transactional;
 @RequiredArgsConstructor
 @Service
 public class GradeServiceImpl implements GradeService {
-    
+
     private final GradeRepository gradeRepository;
     StudentService studentService;
     CourseService courseService;
@@ -38,9 +38,9 @@ public class GradeServiceImpl implements GradeService {
 
     @Override
     public Grade getGrade(Long studentId, Long courseId) {
-         return gradeRepository.findByStudentIdAndCourseId(studentId, courseId)
+        return gradeRepository.findByStudentIdAndCourseId(studentId, courseId)
                 .orElseThrow(() -> new NotFoundException("The grade with student id: '" + studentId
-                         + "' and course id: '" + courseId + "' does not exist in our records"));
+                        + "' and course id: '" + courseId + "' does not exist in our records"));
     }
 
     @Transactional
@@ -48,8 +48,8 @@ public class GradeServiceImpl implements GradeService {
     public Grade saveGrade(Grade grade, Long studentId, Long courseId) {
         Student student = studentService.getStudent(studentId);
         Course course = courseService.getCourse(courseId);
-        if(gradeRepository.findByStudentIdAndCourseId(studentId, courseId).isPresent())
-            throw new IllegalArgumentException("The grade for student id: '" + studentId 
+        if (gradeRepository.findByStudentIdAndCourseId(studentId, courseId).isPresent())
+            throw new BadRequestException("The grade for student id: '" + studentId
                     + "' and course id: '" + courseId + "' already exists");
 
         grade.setStudent(student);
